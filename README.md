@@ -7,24 +7,24 @@ forseti2 (named after the Norse god of justice) is the field control software fo
 
 forseti2 is depdendent on several external libraries. Follow these instructions on Debian/Ubuntu Linux to install these dependencies. On other platforms, you will need to determine how to install these dependencies. 
 
-### LCM ####
+#### LCM
 
-Refer to the LCM install instructions at [lcm.googlecode.com wiki](https://code.google.com/p/lcm/wiki/BuildInstructions). 
+Refer to the LCM install instructions at [https://lcm-proj.github.io/build_instructions.html](https://lcm-proj.github.io/build_instructions.html).  You may have to also install autoreconf:
 
-Once LCM is built, move `lcm-1.0.0/lcm-java/lcm.jar` into this directory to take advantage of `lcm-spy.sh` packet introspection.
+	$ sudo apt-get install autoreconf
 
-### OpenCV ###
-You don't actually need OpenCV. 
+Once LCM is built, move `lcm-X.Y.Z/lcm-java/lcm.jar` into this directory to take advantage of `lcm-spy.sh` packet introspection.
 
-### pygame ###
+##### Other dependencies
 
-    $ sudo apt-get install python-pygame
-    
-### arduino ###
-    $ sudo apt-get install arduino
-    
-### pyfirmata ###
-    $ sudo pip install pyfirmata
+	$ sudo apt-get install python-pygame
+	$ sudo apt-get install arduino
+	$ sudo pip install pyfirmata
+	$ sudo pip install flask
+	$ sudo apt-get install tmux
+	$ sudo apt-get install ruby
+	$ sudo gem install teamocil
+
 
 ## Installation on Mac OS X ##
 
@@ -56,3 +56,36 @@ Once LCM is built, move `lcm-1.0.0/lcm-java/lcm.jar` into this directory to take
 ### arduino and firmata ###
 
 There's no port avaialble for arduino or firmata. 
+
+# Quickstart
+Generate `lcm` types:
+
+	$ ./gen-types.sh
+
+
+
+# Common problems
+
+#### lcm library error when running a script:
+
+```
+Traceback (most recent call last):
+  File "judge_flask.py", line 3, in <module>
+    import lcm
+  File "/usr/local/lib/python2.7/dist-packages/lcm/__init__.py", line 3, in <module>
+    from ._lcm import LCM, LCMSubscription
+ImportError: liblcm.so.1: cannot open shared object file: No such file or directory
+```
+Try:
+
+	$ sudo ldconfig 
+
+#### lcm types import error:
+```
+Traceback (most recent call last):
+  File "judge_flask.py", line 4, in <module>
+    import forseti2 as fs2
+ImportError: No module named forseti2
+```
+	$ ./gen-types.sh
+
